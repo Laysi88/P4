@@ -1,0 +1,5 @@
+env/
+database/
+flake-report/
+*.pyc
+__pycache__
