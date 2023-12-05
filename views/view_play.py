@@ -30,9 +30,26 @@ class PlayView:
     def started_tournament(self):
         print("Liste des tournois en cours")
         tournaments = self.tournament_controller.load_tournaments.load()
+
         for tournament in tournaments:
-            if tournament.status == False:
+            if not tournament.status == True:
                 print(f"{tournament.id}. {tournament.name}")
+
+                for round_data in tournament.rounds:
+                    round_instance = Round(**round_data)  # Créez une instance de la classe Round
+                    if not round_instance.status == True:
+                        print(f"   - {round_instance.name} - {round_instance.start_date}")
+
+                        for match_data in round_instance.matches:
+                            match_instance = Match(**match_data)  # Créez une instance de la classe Match
+                            if not match_instance.status == True:
+                                print(
+                                    f"      - {match_instance.player1['last_name']}{match_instance.player1['first_name']} vs {match_instance.player2['last_name']}{match_instance.player2['first_name']}"
+                                )
+                            else:
+                                print("Tous les matchs sont terminés")
+                    else:
+                        print("Tous les rounds sont terminés")
             else:
                 print("Aucun tournoi en cours")
 

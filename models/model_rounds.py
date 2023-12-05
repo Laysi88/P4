@@ -1,14 +1,14 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, Query
 
 
 class Round:
     id_counter = 0
 
-    def __init__(self, name, start_date, end_date, status=False, id=id_counter):
+    def __init__(self, name, start_date, end_date, matches=None, status=False, id=id_counter):
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
-        self.matches = []
+        self.matches = matches or []  # Utilisez la valeur par défaut si matches n'est pas fourni
         self.status = status
         self.id = id if id else self.generate_id()
 
@@ -18,9 +18,9 @@ class Round:
         all_rounds = db.all()
 
         if all_rounds:
-            rounds = [int(round["id"]) for tournament in all_rounds for round in tournament.get("rounds", [])]
-            if rounds:
-                max_id = max(rounds)
+            matches = [int(round["id"]) for tournament in all_rounds for round in tournament.get("rounds", [])]
+            if matches:
+                max_id = max(matches)
                 return str(max_id + 1)
         return "1"
 
