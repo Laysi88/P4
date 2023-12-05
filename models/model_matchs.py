@@ -33,4 +33,5 @@ class Match:
             "player1": self.player1,
             "player2": self.player2,
             "status": self.status,
+            "winner": self.winner,
         }
