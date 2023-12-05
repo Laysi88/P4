@@ -130,7 +130,13 @@ class TournamentView:
         print("Sélectionnez le tournoi à modifier")
 
         # Sélection de l'id du tournoi à modifier
-        id_to_update = input("Identifiant: ")
+        while True:
+            id_to_update = input("Identifiant: ")
+            if id_to_update.isdigit():
+                id_to_update = str(id_to_update)
+                break
+            else:
+                print("Identifiant invalide")
 
         # Charge le tournoi à modifier
         tournament_to_update = self.tournament_controller.load_data_tournament.loaddata(id_to_update)
@@ -202,8 +208,19 @@ class TournamentView:
         selected_players_id = input("Entrez les chess_ids des joueurs à ajouter (séparés par des virgules) : ").split(
             ","
         )
+
         for player_id in selected_players_id:
-            selected_players.append(players_list.get(str(player_id)))
+            # vérification si le joueur est déjà dans la liste
+            if player_id in players_list:
+                player = players_list[player_id]
+                if player not in selected_players:
+                    selected_players.append(player)
+                    print(f"Le joueur {player_id} a été ajouté à la liste.")
+                else:
+                    print(f"Le joueur {player_id} est déjà dans la liste.")
+            else:
+                print(f"Le joueur avec l'ID {player_id} n'existe pas dans la base de données.")
+
         news_data.append(selected_players)
 
         # Rounds du tournoi
