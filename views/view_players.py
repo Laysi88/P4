@@ -105,7 +105,6 @@ class PlayerView:
             else:
                 print("Identifiant invalide")
 
-        # Créez un objet Player sans spécifier l'ID, il sera généré automatiquement
         updated_player = Player(
             last_name=last_name,
             first_name=first_name,
@@ -113,8 +112,6 @@ class PlayerView:
             chess_id=chess_id,
             id=id_to_update,
         )
-
-        # Utilisez la méthode update_players.update en passant l'ID à mettre à jour et l'objet Player
         self.player_controller.update_players.update(updated_player)
         print("Joueur modifié")
 

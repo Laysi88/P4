@@ -1,1 +1,2 @@
 from .controller_players import PlayerController
+from .controller_tournaments import TournamentController
