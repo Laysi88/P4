@@ -1,2 +1,4 @@
 from .controller_players import PlayerController
 from .controller_tournaments import TournamentController
+from .controller_rounds import RoundController
+from .controller_matchs import MatchController
