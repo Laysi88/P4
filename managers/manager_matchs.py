@@ -1,4 +1,3 @@
-from models import Match
 from tinydb import TinyDB, Query
 
 
@@ -11,7 +10,7 @@ class CreateMatch:
         tournament = self.db.get(Query().id == tournament_id)
         if tournament:
             for round in tournament["rounds"]:
-                if round["status"] == False:
+                if not round["status"]:
                     round["matches"].append(match.serialize())
                     self.db.update({"rounds": tournament["rounds"]}, Query().id == tournament_id)
                     return match
@@ -25,7 +24,7 @@ class UpdateMatch:
         tournament = self.db.get(Query().id == tournament_id)
         if tournament:
             for round in tournament["rounds"]:
-                if round["status"] == False:
+                if not round["status"]:
                     for match in round["matches"]:
                         if match["id"] == match_id:
                             match["status"] = True

@@ -1,5 +1,4 @@
 from managers import CreateTournament, LoadTournament, LoadDataTournament, UpdateTournament
-from models import Tournament
 from tinydb import TinyDB
 
 

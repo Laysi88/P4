@@ -1,7 +1,6 @@
 from controllers import TournamentController, RoundController, MatchController
 from datetime import datetime
-from tinydb import TinyDB
-from models import Tournament, Round, Match
+from models import Round, Match
 import random
 
 
@@ -35,33 +34,38 @@ class PlayView:
         tournaments = self.tournament_controller.load_tournaments.load()
 
         for tournament in tournaments:
-            if not tournament.status == True:
+            if not tournament.status:
                 print(f"{tournament.id}. {tournament.name}")
 
                 for round_data in tournament.rounds:
                     round_instance = Round(**round_data)  # Créez une instance de la classe Round
-                    if not round_instance.status == True:
+                    if not round_instance.status:
                         print(f"   - {round_instance.name} - {round_instance.start_date}")
 
+                        at_least_one_match_in_progress = False
                         for match_data in round_instance.matches:
                             match_instance = Match(**match_data)  # Créez une instance de la classe Match
-                            if not match_instance.status == True:
+                            if not match_instance.status:
                                 print(
-                                    f"      - {match_instance.player1['last_name']} {match_instance.player1['first_name']} vs {match_instance.player2['last_name']} {match_instance.player2['first_name']}"
+                                    f"{match_instance.player1['last_name']} {match_instance.player1['first_name']} "
+                                    f"vs {match_instance.player2['last_name']} {match_instance.player2['first_name']}"
                                 )
-                        else:
+                                # Définir le drapeau sur True si au moins un match n'est pas terminé
+                                at_least_one_match_in_progress = True
+
+                        if not at_least_one_match_in_progress:
                             print("Tous les matchs sont terminés")
-                else:
-                    print("Tous les rounds sont terminés")
-        else:
-            print("Aucun tournoi en cours")
+                    else:
+                        print("Tous les rounds sont terminés")
+            else:
+                print("Aucun tournoi en cours")
 
     def launch_tournament(self):
         print("Lancement d'un tournoi")
         # Récupération de l'id du tournoi
         tournament_id = input("Id du tournoi: ")
         tournament = self.tournament_controller.load_data_tournament.loaddata(tournament_id)
-        if tournament.status == False:
+        if not tournament.status:
             print(f"Tournoi: {tournament.name}")
 
             # Création du premier round
@@ -90,7 +94,8 @@ class PlayView:
                     self.match_controller.create_match.create(tournament_id, match)
                     # afficher les match avec seulement le nom des joueurs
                     print(
-                        f"Match: {player1['last_name']}{player1['first_name']} vs {player2['last_name']}{player2['first_name']}"
+                        f"Match: {player1['last_name']} {player1['first_name']} vs "
+                        f"{player2['last_name']} {player2['first_name']}"
                     )
 
             else:
@@ -104,16 +109,17 @@ class PlayView:
         tournament_id = input("Id du tournoi: ")
         tournament = self.tournament_controller.load_data_tournament.loaddata(tournament_id)
 
-        if tournament.status == False and tournament.rounds != []:
+        if not tournament.status and tournament.rounds != []:
             for round_data in tournament.rounds:
                 round_instance = Round(**round_data)  # Créez une instance de la classe Round
-                if not round_instance.status == True and round_instance.matches != []:
+                if not round_instance.status and round_instance.matches != []:
                     print(f"   - {round_instance.name} - {round_instance.start_date}")
                     for match_data in round_instance.matches:
                         match_instance = Match(**match_data)  # Créez une instance de la classe Match
-                        if not match_instance.status == True:
+                        if not match_instance.status:
                             print(
-                                f"      - {match_instance.player1['last_name']}{match_instance.player1['first_name']} vs {match_instance.player2['last_name']}{match_instance.player2['first_name']}"
+                                f"{match_instance.player1['last_name']} {match_instance.player1['first_name']} vs "
+                                f"{match_instance.player2['last_name']} {match_instance.player2['first_name']}"
                             )
                             print(
                                 "1. "
@@ -128,6 +134,7 @@ class PlayView:
                                 + match_instance.player2["first_name"]
                             )
                             print("3.Match nul")
+                            print("4. Retour")
 
                             result = input("Résultat du match: ")
 
@@ -137,8 +144,8 @@ class PlayView:
                                 result = f"{match_instance.player2['last_name']}{match_instance.player2['first_name']}"
                             elif result == "3":
                                 result = "Match nul"
-                            else:
-                                print("Choix invalide")
+                            elif result == "4":
+                                break
                             # Mise à jour du résultat du match
                             self.match_controller.update_match.result(tournament_id, match_instance.id, result)
                             print("Résultat enregistré")

@@ -1,4 +1,3 @@
-from models import Round
 from tinydb import TinyDB, Query
 
 
