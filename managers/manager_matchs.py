@@ -31,3 +31,17 @@ class UpdateMatch:
                             match["winner"] = winner
                             self.db.update({"rounds": tournament["rounds"]}, Query().id == tournament_id)
                             return match
+
+
+class LoadMatch:
+    def __init__(self, filename):
+        self.db = TinyDB(filename).table("tournaments_table")
+
+    def load(self, tournament_id, match_id):
+        tournament = self.db.get(Query().id == tournament_id)
+        if tournament:
+            for round in tournament["rounds"]:
+                if not round["status"]:
+                    for match in round["matches"]:
+                        if match["id"] == match_id:
+                            return match

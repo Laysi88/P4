@@ -1,4 +1,4 @@
-from managers import CreateMatch, UpdateMatch
+from managers import CreateMatch, UpdateMatch, LoadMatch
 
 
 class MatchController:
@@ -6,3 +6,4 @@ class MatchController:
         self.filename = filename
         self.create_match = CreateMatch(self.filename)
         self.update_match = UpdateMatch(self.filename)
+        self.load_match = LoadMatch(self.filename)

@@ -40,7 +40,11 @@ class LoadDataTournament:
         self.db = TinyDB(filename).table("tournaments_table")
 
     def loaddata(self, id):
-        tournament_data = self.db.get(Query().id == id)
+        # Assurez-vous que id est une chaîne de caractères
+        id_str = str(id)
+        tournament_data = self.db.get(Query().id == id_str)
+        if tournament_data is None:
+            return None
         tournament = Tournament(
             id=tournament_data["id"],
             name=tournament_data["name"],
@@ -54,6 +58,7 @@ class LoadDataTournament:
             curent_round=tournament_data["curent_round"],
             total_rounds=tournament_data["total_rounds"],
         )
+
         return tournament
 
 
