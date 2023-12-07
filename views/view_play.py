@@ -112,10 +112,15 @@ class PlayView:
         if not tournament.status and tournament.rounds != []:
             for round_data in tournament.rounds:
                 round_instance = Round(**round_data)  # Créez une instance de la classe Round
-                if not round_instance.status and round_instance.matches != []:
+                if not round_instance.status and round_instance.matches != []:  # Si le round n'est pas terminé
                     print(f"   - {round_instance.name} - {round_instance.start_date}")
-                    for match_data in round_instance.matches:
-                        match_instance = Match(**match_data)  # Créez une instance de la classe Match
+                    for match_data in round_instance.matches and not match_instance.status:
+                        match_instance = Match(**match_data)
+                        print(
+                            f"{match_instance.player1['last_name']} {match_instance.player1['first_name']} "
+                            f"vs {match_instance.player2['last_name']} {match_instance.player2['first_name']}"
+                        )
+
                         if not match_instance.status:
                             print(
                                 f"{match_instance.player1['last_name']} {match_instance.player1['first_name']} vs "
@@ -150,6 +155,8 @@ class PlayView:
                             self.match_controller.update_match.result(tournament_id, match_instance.id, result)
                             print("Résultat enregistré")
                     else:
-                        print("Aucun match à jouer")
+                        print("Tous les matchs sont terminés")
                         match_instance.status = True
                         self.round_controller.update_round.update(tournament_id, round_instance.id, round_instance)
+        else:
+            print("Aucun match en cours")
