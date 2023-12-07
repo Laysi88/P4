@@ -149,5 +149,7 @@ class PlayView:
                             # Mise à jour du résultat du match
                             self.match_controller.update_match.result(tournament_id, match_instance.id, result)
                             print("Résultat enregistré")
-        else:
-            print("Aucun match à jouer")
+                    else:
+                        print("Aucun match à jouer")
+                        match_instance.status = True
+                        self.round_controller.update_round.update(tournament_id, round_instance.id, round_instance)
