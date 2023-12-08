@@ -122,6 +122,3 @@ class PlayerView:
         players.sort(key=lambda x: x.last_name)
         for player in players:
             print(player)
-
-
-s
