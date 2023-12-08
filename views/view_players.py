@@ -117,6 +117,11 @@ class PlayerView:
 
     def show_players(self):
         print("Liste des joueurs")
+        # trie des joueurs par ordre alphabétique
         players = self.player_controller.load_players.load()
+        players.sort(key=lambda x: x.last_name)
         for player in players:
             print(player)
+
+
+s

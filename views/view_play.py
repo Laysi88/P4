@@ -113,6 +113,7 @@ class PlayView:
                 break
             else:
                 print("Tournoi introuvable. Veuillez entrer un ID de tournoi valide.")
+                break
 
         if not tournament.status and tournament.rounds != []:  # Si le tournoi n'est pas terminé
             for round_data in tournament.rounds:  # Pour chaque round du tournoi
