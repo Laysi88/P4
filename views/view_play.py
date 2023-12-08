@@ -110,7 +110,8 @@ class PlayView:
                         player2 = random.choice(players_copy)
                         players_copy.remove(player2)
                         match = Match(player1, player2)
-                        self.match_controller.create_match.create(tournament_id, match)
+                        round_id = round
+                        self.match_controller.create_match.create(tournament_id, match, round_id)
                         # afficher les match avec seulement le nom des joueurs
                         print(
                             f"Match: {player1['last_name']} {player1['first_name']} vs "
@@ -239,8 +240,12 @@ class PlayView:
                                     player2 = players_copy.pop(0)
                                     match = Match(player1, player2)
                                     round_id = new_round.id
+                                    print("Round ID f", round_id)
+
                                     # Ajout des matchs au round
-                                    self.match_controller.create_match.create(tournament_id, match, round_id)
+                                    self.match_controller.create_match.create(
+                                        tournament_id, match.serialize(), round_id
+                                    )
                                     new_round.matches.append(match)
                                 self.round_controller.update_new_round.update(tournament_id, new_round.id, new_round)
 

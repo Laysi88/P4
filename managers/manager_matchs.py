@@ -6,12 +6,11 @@ class CreateMatch:
         self.db = TinyDB(filename).table("tournaments_table")
 
     def create(self, tournament_id, match, round_id):
-        # enregistrement du match dans le round du tournoi
         tournament = self.db.get(Query().id == tournament_id)
         if tournament:
-            for round in tournament["rounds"]:
-                if not round["status"]:
-                    round["matches"].append(match.serialize())
+            for round_data in tournament["rounds"]:
+                if round_data["id"] == round_id:
+                    round_data["matches"].append(match)
                     self.db.update({"rounds": tournament["rounds"]}, Query().id == tournament_id)
                     return match
 
@@ -35,6 +34,7 @@ class UpdateMatch:
                             player2_id = match_data["player2"]["id"]
 
                             # Mettre à jour les scores des joueurs
+
                             player1_index = next(
                                 i for i, player in enumerate(tournament["players"]) if player["id"] == player1_id
                             )
