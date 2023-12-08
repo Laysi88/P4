@@ -1,4 +1,4 @@
-from managers import CreateRound, UpdateRound, CreateNextRound
+from managers import CreateRound, UpdateRound
 
 
 class RoundController:

@@ -73,6 +73,11 @@ class PlayView:
         tournament_id = input("Id du tournoi: ")
         tournament = self.tournament_controller.load_data_tournament.loaddata(tournament_id)
 
+        # Vérifier si il y a au moins 8 joueurs dans le tournoi
+        if len(tournament.players) < 8:
+            print("Il n'y a pas assez de joueurs pour lancer le tournoi")
+            return
+
         # Vérifier si le tournoi existe avant d'accéder à ses propriétés
         if tournament is not None:
             if not tournament.status:
@@ -134,7 +139,7 @@ class PlayView:
 
                     # Vérifier si le round est terminé
                     if not round_instance.status:
-                        print(f"Round: {round_instance.name} - {round_instance.start_date}")
+                        print(f"Round: {round_instance.name}")
 
                         # Récupération des matchs du round
                         matches = round_instance.matches
@@ -180,7 +185,22 @@ class PlayView:
                                     break
                             self.match_controller.update_match.result(tournament_id, match_id, winner)
                             print("Résultat du match enregistré")
+                        else:
+                            print("Match introuvable ou déjà terminé")
 
-                    if all(match["status"] for match in round_instance.matches):
-                        self.round_controller.update_round.update(tournament_id, round_instance.id, round_instance)
-                        print("Round terminé")
+                if all(match["status"] for match in round_instance.matches):
+                    self.round_controller.update_round.update(tournament_id, round_instance.id, round_instance)
+                    print("Round terminé")
+                    self.next_rond()
+
+    def next_rond(self):
+        while True:
+            print("1. Créer un nouveau round")
+            print("2. Retour")
+            choice = input("Votre choix: ")
+            if choice == "1":
+                break
+            elif choice == "2":
+                break
+            else:
+                print("Choix invalide")
