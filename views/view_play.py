@@ -15,7 +15,7 @@ class PlayView:
             print("Menu tournois")
             print("1. Liste des tournois en cours")
             print("2. Lancer le tournoi")
-            print("3. Résultats des matchs")
+            print("3. Continuer le tournoi")
             print("4. Retour")
             choice = input("Votre choix: ")
             if choice == "1":
@@ -23,7 +23,7 @@ class PlayView:
             elif choice == "2":
                 self.launch_tournament()
             elif choice == "3":
-                self.enter_results()
+                self.enter_result()
             elif choice == "4":
                 break
             else:
@@ -117,44 +117,70 @@ class PlayView:
         else:
             print("Tournoi introuvable. Veuillez entrer un ID de tournoi valide.")
 
-    def enter_results(self):
-        print("Résultats des matchs")
-
+    def enter_result(self):
         # Récupération de l'id du tournoi
-        while True:
-            tournament_id = input("Id du tournoi: ")
-            tournament = self.tournament_controller.load_data_tournament.loaddata(tournament_id)
-            if tournament is not None:
-                break
-            else:
-                print("Tournoi introuvable. Veuillez entrer un ID de tournoi valide.")
-                break
+        tournament_id = input("Id du tournoi: ")
+        tournament = self.tournament_controller.load_data_tournament.loaddata(tournament_id)
 
-        # Vérifier si le tournoi n'est pas terminé et a des rounds
-        if tournament is not None and not tournament.status and tournament.rounds != []:
-            for round_data in tournament.rounds:  # Pour chaque round du tournoi
-                round_instance = Round(**round_data)  # Créez une instance de la classe Round
-                if not round_instance.status and round_instance.matches != []:  # Si le round n'est pas terminé
-                    for match_data in round_instance.matches:  # Pour chaque match du round
-                        match_instance = Match(**match_data)
-                        if not match_instance.status:
-                            print(
-                                f"{match_instance.id}.  "
-                                f"{match_instance.player1['last_name']} {match_instance.player1['first_name']} "
-                                f"vs {match_instance.player2['last_name']} {match_instance.player2['first_name']}"
-                            )
-                        else:
-                            # Clôturer le round
-                            self.round_controller.update_round.update(tournament_id, round_instance.id, round_instance)
-                            # Lancer le round suivant
+        # Vérifier si le tournoi existe avant d'accéder à ses propriétés
+        if tournament is not None:  # Vérifier si le tournoi existe avant d'accéder à ses propriétés
+            if not tournament.status:  # Vérifier si le tournoi est terminé
+                print(f"Tournoi: {tournament.name}")  # Afficher le nom du tournoi
 
-            # Récupération de l'id du match
-            while True:
-                print("Id du match: ")
-                match_id = input()
-                match = self.match_controller.load_match.load(tournament_id, match_id)
-                if match:
-                    break
-                else:
-                    print("Id du match invalide")
-                    break
+                # Récupération des rounds du tournoi
+                rounds = tournament.rounds
+                for round_data in rounds:
+                    round_instance = Round(**round_data)
+
+                    # Vérifier si le round est terminé
+                    if not round_instance.status:
+                        print(f"Round: {round_instance.name} - {round_instance.start_date}")
+
+                        # Récupération des matchs du round
+                        matches = round_instance.matches
+                        for match_data in matches:
+                            match_instance = Match(**match_data)
+
+                            # Vérifier si le match est terminé
+                            # imprimler iddu match  player 1 et player 2
+                            if not match_instance.status:
+                                print(
+                                    f"Match: {match_instance.id} "
+                                    f"{match_instance.player1['last_name']} {match_instance.player1['first_name']} "
+                                    "vs"
+                                    f" {match_instance.player2['last_name']} {match_instance.player2['first_name']}"
+                                )
+                    # Récupérer l'id du match
+                    if not all(match["status"] for match in round_instance.matches):
+                        match_id = input("Id du match: ")
+                        match = self.match_controller.load_match.load(tournament_id, match_id)
+                        print(
+                            f"Match: {match['id']}"
+                            f"{match['player1']['last_name']} {match['player1']['first_name']} "
+                            "vs"
+                            f" {match['player2']['last_name']} {match['player2']['first_name']}"
+                        )
+
+                        # si le match existe et qu'il n'est pas terminé
+                        if match is not None and not match["status"]:
+                            # On récupère le gagnant du match
+                            while True:
+                                print("1." f"{match['player1']['last_name']} {match['player1']['first_name']} ")
+                                print("2." f"{match['player2']['last_name']} {match['player2']['first_name']} ")
+                                print("3. Match nul")
+                                choice = input("Votre choix: ")
+                                if choice == "1":
+                                    winner = f"{match['player1']['last_name']} {match['player1']['first_name']} "
+                                    break
+                                elif choice == "2":
+                                    winner = f"{match['player2']['last_name']} {match['player2']['first_name']} "
+                                    break
+                                elif choice == "3":
+                                    winner = "Match nul"
+                                    break
+                            self.match_controller.update_match.result(tournament_id, match_id, winner)
+                            print("Résultat du match enregistré")
+
+                    if all(match["status"] for match in round_instance.matches):
+                        self.round_controller.update_round.update(tournament_id, round_instance.id, round_instance)
+                        print("Round terminé")
