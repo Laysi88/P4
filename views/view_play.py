@@ -161,12 +161,13 @@ class PlayView:
                     if not all(match["status"] for match in round_instance.matches):
                         match_id = input("Id du match: ")
                         match = self.match_controller.load_match.load(tournament_id, match_id)
-                        print(
-                            f"Match: {match['id']}"
-                            f"{match['player1']['last_name']} {match['player1']['first_name']} "
-                            "vs"
-                            f" {match['player2']['last_name']} {match['player2']['first_name']}"
-                        )
+                        if match is not None:
+                            print(
+                                f"Match: {match['id']}"
+                                f"{match['player1']['last_name']} {match['player1']['first_name']} "
+                                "vs"
+                                f" {match['player2']['last_name']} {match['player2']['first_name']}"
+                            )
 
                         # si le match existe et qu'il n'est pas terminé
                         if match is not None and not match["status"]:
@@ -189,20 +190,67 @@ class PlayView:
                             print("Résultat du match enregistré")
                         else:
                             print("Match introuvable ou déjà terminé")
+                    else:
+                        print("Tous les matchs sont terminés")
 
                 if all(match["status"] for match in round_instance.matches):
                     self.round_controller.update_round.update(tournament_id, round_instance.id, round_instance)
-                    print("Round terminé")
-                    self.next_rond()
+                    print("Nouveaux classements des joueurs")
 
-    def next_rond(self):
-        while True:
-            print("1. Créer un nouveau round")
-            print("2. Retour")
-            choice = input("Votre choix: ")
-            if choice == "1":
-                break
-            elif choice == "2":
-                break
+                    # Récupération des joueurs du tournoi
+                    players = tournament.players
+
+                    # Trier les joueurs par score
+                    sorted_players = sorted(players, key=lambda x: x["score"], reverse=True)
+
+                    for player in sorted_players:
+                        print(f"{player['last_name']} {player['first_name']} - {player['score']}")
+                    if tournament.curent_round < tournament.total_rounds:
+                        # Création du round suivant
+                        print("Voulez-vous créer un nouveau round ?")
+                        print("1. Oui")
+                        print("2. Non")
+                        choice = input("Votre choix: ")
+                        while True:
+                            if choice == "1":
+                                tournament.curent_round = tournament.curent_round + 1
+                                self.tournament_controller.update_tournament.update(tournament)
+
+                                # creéation du round suivant
+                                name = f"Round {tournament.curent_round}"
+                                start_date = datetime.now().strftime("%Y-%m-%d")
+                                end_date = ""
+                                status = False
+                                round = Round(
+                                    name,
+                                    start_date,
+                                    end_date,
+                                    status,
+                                )
+                                round = self.round_controller.create_first_round.create(tournament_id, round)
+                                print(f"Round: {round.name} - {round.start_date}")
+
+                                sorted_players = sorted(players, key=lambda x: x["score"], reverse=True)
+                                # creation des paires de joueurs par score
+                                players_copy = list(sorted_players)
+                                player_pairs = []
+
+                                while len(players_copy) > 1:
+                                    # Création des matchs par score
+                                    player1 = players_copy.pop(0)
+                                    player2 = players_copy.pop(0)
+                                    match = Match(player1, player2)
+                                    player_pairs.append(match)
+                                    self.match_controller.create_match.create(tournament_id, match)
+
+                                break
+                            elif choice == "2":
+                                break
+                    else:
+                        print("Le tournoi est terminé")
+                        tournament.status = True
+                        self.tournament_controller.update_tournament.update(tournament)
             else:
-                print("Choix invalide")
+                print("Le tournoi est terminé")
+        else:
+            print("Tournoi introuvable. Veuillez entrer un ID de tournoi valide.")
