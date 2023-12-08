@@ -216,41 +216,35 @@ class PlayView:
                                 tournament.curent_round = tournament.curent_round + 1
                                 self.tournament_controller.update_tournament.update(tournament)
 
-                                # creéation du round suivant
+                                # Création du nouveau round
                                 name = f"Round {tournament.curent_round}"
                                 start_date = datetime.now().strftime("%Y-%m-%d")
                                 end_date = ""
                                 status = False
-                                round = Round(
-                                    name,
-                                    start_date,
-                                    end_date,
-                                    status,
-                                )
-                                round = self.round_controller.create_first_round.create(tournament_id, round)
-                                print(f"Round: {round.name} - {round.start_date}")
+                                new_round = Round(name, start_date, end_date, status)
+                                new_round = self.round_controller.create_first_round.create(tournament_id, new_round)
+                                print(f"Round: {new_round.name} - {new_round.start_date}")
 
+                                # Tri des joueurs par score
                                 sorted_players = sorted(players, key=lambda x: x["score"], reverse=True)
-                                # creation des paires de joueurs par score
+
+                                # Création des paires de joueurs par score
                                 players_copy = list(sorted_players)
                                 player_pairs = []
 
+                                # Création des matchs pour le nouveau round
                                 while len(players_copy) > 1:
                                     # Création des matchs par score
                                     player1 = players_copy.pop(0)
                                     player2 = players_copy.pop(0)
                                     match = Match(player1, player2)
-                                    player_pairs.append(match)
-                                    self.match_controller.create_match.create(tournament_id, match)
+                                    round_id = new_round.id
+                                    # Ajout des matchs au round
+                                    self.match_controller.create_match.create(tournament_id, match, round_id)
+                                    new_round.matches.append(match)
+                                self.round_controller.update_new_round.update(tournament_id, new_round.id, new_round)
 
                                 break
-                            elif choice == "2":
-                                break
-                    else:
-                        print("Le tournoi est terminé")
-                        tournament.status = True
-                        self.tournament_controller.update_tournament.update(tournament)
-            else:
-                print("Le tournoi est terminé")
+
         else:
             print("Tournoi introuvable. Veuillez entrer un ID de tournoi valide.")

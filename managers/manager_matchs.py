@@ -5,7 +5,7 @@ class CreateMatch:
     def __init__(self, filename):
         self.db = TinyDB(filename).table("tournaments_table")
 
-    def create(self, tournament_id, match):
+    def create(self, tournament_id, match, round_id):
         # enregistrement du match dans le round du tournoi
         tournament = self.db.get(Query().id == tournament_id)
         if tournament:

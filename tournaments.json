@@ -2,8 +2,8 @@
     "tournaments_table": {
         "1": {
             "id": "1",
-            "name": "Super tournoi de test",
-            "location": "Paris",
+            "name": "test",
+            "location": "test",
             "start_date": "2023-12-08",
             "end_date": null,
             "total_rounds": 2,
@@ -11,38 +11,38 @@
             "players": [
                 {
                     "id": "1",
-                    "last_name": "Lienard",
-                    "first_name": "Arnaud",
+                    "last_name": "John",
+                    "first_name": "Doe",
                     "birth_date": "09/09/1990",
                     "chess_id": "af1234",
-                    "score": 0.0,
+                    "score": 1.0,
                     "opponents": []
                 },
                 {
                     "id": "2",
-                    "last_name": "Zinedine",
-                    "first_name": "Zizou",
+                    "last_name": "Malcom",
+                    "first_name": "X",
                     "birth_date": "01/02/1999",
-                    "chess_id": "FF1998",
-                    "score": 1.0,
+                    "chess_id": "ff1998",
+                    "score": 0.0,
                     "opponents": []
                 },
                 {
                     "id": "3",
-                    "last_name": "Lienrd",
-                    "first_name": "Philippe",
+                    "last_name": "Pierre",
+                    "first_name": "Henry",
                     "birth_date": "20/10/1959",
                     "chess_id": "ff1235",
-                    "score": 1.0,
+                    "score": 0.0,
                     "opponents": []
                 },
                 {
                     "id": "4",
-                    "last_name": "Test",
-                    "first_name": "Test",
+                    "last_name": "Marie",
+                    "first_name": "Jeanne",
                     "birth_date": "02/02/2002",
                     "chess_id": "az1478",
-                    "score": 0.0,
+                    "score": 1.0,
                     "opponents": []
                 }
             ],
@@ -56,54 +56,54 @@
                         {
                             "id": "1",
                             "player1": {
-                                "id": "3",
-                                "last_name": "Lienrd",
-                                "first_name": "Philippe",
-                                "birth_date": "20/10/1959",
-                                "chess_id": "ff1235",
-                                "score": 0.0,
-                                "opponents": []
-                            },
-                            "player2": {
                                 "id": "1",
-                                "last_name": "Lienard",
-                                "first_name": "Arnaud",
+                                "last_name": "John",
+                                "first_name": "Doe",
                                 "birth_date": "09/09/1990",
                                 "chess_id": "af1234",
                                 "score": 0.0,
                                 "opponents": []
                             },
+                            "player2": {
+                                "id": "3",
+                                "last_name": "Pierre",
+                                "first_name": "Henry",
+                                "birth_date": "20/10/1959",
+                                "chess_id": "ff1235",
+                                "score": 0.0,
+                                "opponents": []
+                            },
                             "status": true,
-                            "winner": "Lienrd Philippe "
+                            "winner": "John Doe "
                         },
                         {
                             "id": "2",
                             "player1": {
-                                "id": "2",
-                                "last_name": "Zinedine",
-                                "first_name": "Zizou",
-                                "birth_date": "01/02/1999",
-                                "chess_id": "FF1998",
-                                "score": 0.0,
-                                "opponents": []
-                            },
-                            "player2": {
                                 "id": "4",
-                                "last_name": "Test",
-                                "first_name": "Test",
+                                "last_name": "Marie",
+                                "first_name": "Jeanne",
                                 "birth_date": "02/02/2002",
                                 "chess_id": "az1478",
                                 "score": 0.0,
                                 "opponents": []
                             },
+                            "player2": {
+                                "id": "2",
+                                "last_name": "Malcom",
+                                "first_name": "X",
+                                "birth_date": "01/02/1999",
+                                "chess_id": "ff1998",
+                                "score": 0.0,
+                                "opponents": []
+                            },
                             "status": true,
-                            "winner": "Zinedine Zizou "
+                            "winner": "Marie Jeanne "
                         }
                     ],
                     "status": true
                 }
             ],
-            "description": "Un tournoi pour tester le code",
+            "description": "test",
             "status": false
         }
     }
