@@ -34,6 +34,7 @@ class LoadPlayers:
                 chess_id=player_data["chess_id"],
             )
             player.score = player_data["score"]
+            player.opponents = player_data["opponents"]
             players.append(player)
         return players
 

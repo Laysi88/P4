@@ -33,14 +33,17 @@ class UpdateMatch:
                             player1_id = match_data["player1"]["id"]
                             player2_id = match_data["player2"]["id"]
 
-                            # Mettre à jour les scores des joueurs
-
+                            # Metre à jour les adversaires dans opoonents
                             player1_index = next(
                                 i for i, player in enumerate(tournament["players"]) if player["id"] == player1_id
                             )
                             player2_index = next(
                                 i for i, player in enumerate(tournament["players"]) if player["id"] == player2_id
                             )
+                            tournament["players"][player1_index]["opponents"].append(player2_id)
+                            tournament["players"][player2_index]["opponents"].append(player1_id)
+
+                            # Mettre à jour les scores des joueurs
 
                             if (
                                 winner

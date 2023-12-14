@@ -124,7 +124,25 @@ class TournamentView:
         print("Liste des tournois")
         tournaments = self.tournament_controller.load_tournaments.load()
         for tournament in tournaments:
-            print(tournament)
+            # Id du tournoi
+            print(f"Id: {tournament.id}")
+            # Nom du tournoi
+            print(f"Nom: {tournament.name}")
+            # Lieu du tournoi
+            print(f"Lieu: {tournament.location}")
+            # Date de début du tournoi
+            print(f"Date de début: {tournament.start_date}")
+            # Date de fin du tournoi
+            if tournament.end_date is None:
+                print("Date de fin: Non terminé")
+            else:
+                print(f"Date de fin: {tournament.end_date}")
+            # Nombre de tours
+            print(f"Nombre de tours: {tournament.total_rounds}")
+            # Tour actuel
+            print(f"Tour actuel: {tournament.curent_round}")
+            # Description du tournoi
+            print(f"Description: {tournament.description}")
 
     def update_tournament(self):
         print("Sélectionnez le tournoi à modifier")

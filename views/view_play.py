@@ -74,7 +74,7 @@ class PlayView:
         tournament = self.tournament_controller.load_data_tournament.loaddata(tournament_id)
 
         # Vérifier si il y a au moins 8 joueurs dans le tournoi
-        required_players = tournament.total_rounds * 2
+        required_players = 2**tournament.total_rounds
         if len(tournament.players) < required_players:
             print("Il n'y a pas assez de joueurs pour lancer le tournoi")
             print(f"Nombre de joueurs requis: {required_players}")
@@ -224,13 +224,29 @@ class PlayView:
 
                                 # Création des paires de joueurs par score
                                 players_copy = list(sorted_players)
-                                player_pairs = []
 
-                                # Création des matchs pour le nouveau round
+                                # tant qu'il y a plus d'un joueur dans la liste
                                 while len(players_copy) > 1:
-                                    # Création des matchs par score
+                                    # Création des matchs
+                                    # Récupération du premier joueur
                                     player1 = players_copy.pop(0)
-                                    player2 = players_copy.pop(0)
+                                    available_opponents = list(
+                                        filter(
+                                            lambda x: x["id"] not in player1["opponents"],
+                                            players_copy,
+                                        )
+                                    )
+                                    if not available_opponents:
+                                        # Tous les adversaires possibles ont déjà été rencontrés par player1
+                                        # Peut-être afficher un message ou prendre une autre action
+                                        break
+                                    # trier les joueurs par score
+                                    sorted_players_opponents = sorted(
+                                        available_opponents, key=lambda x: x["score"], reverse=True
+                                    )
+                                    # Récupération du deuxième joueur
+                                    player2 = sorted_players_opponents.pop(0)
+                                    # on les supprime de la liste des joueurs restants
                                     match = Match(player1, player2)
                                     round_id = new_round.id
                                     print("Round ID f", round_id)
@@ -240,6 +256,10 @@ class PlayView:
                                         tournament_id, match.serialize(), round_id
                                     )
                                     new_round.matches.append(match)
+                                    if player1 in players_copy:
+                                        players_copy.remove(player1)
+                                    if player2 in players_copy:
+                                        players_copy.remove(player2)
                                 # Mise à jour du round
                                 self.round_controller.update_new_round.update(tournament_id, new_round.id, new_round)
                                 break
