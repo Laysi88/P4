@@ -37,8 +37,14 @@ class UpdateNewRound:
     def update(self, tournament_id, round_id, round):
         tournament = self.db.get(Query().id == tournament_id)
         if tournament:
-            for round_data in tournament["rounds"]:
+            # Trouver l'index du round dans la liste des rounds du tournoi
+            for i, round_data in enumerate(tournament["rounds"]):
                 if round_data["id"] == round_id:
+                    # Mettre à jour le statut du round précédent (s'il y en a un)
+                    if i > 0:
+                        previous_round = tournament["rounds"][i - 1]
+                        previous_round["status"] = True
+                    # Mettre à jour le statut du round courant
                     round_data["status"] = False
                     self.db.update({"rounds": tournament["rounds"]}, Query().id == tournament_id)
                     return round_data

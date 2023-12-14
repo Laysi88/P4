@@ -15,7 +15,7 @@
                     "first_name": "Doe",
                     "birth_date": "09/09/1990",
                     "chess_id": "af1234",
-                    "score": 1.0,
+                    "score": 2.0,
                     "opponents": []
                 },
                 {
@@ -24,7 +24,7 @@
                     "first_name": "X",
                     "birth_date": "01/02/1999",
                     "chess_id": "ff1998",
-                    "score": 0.0,
+                    "score": 1.0,
                     "opponents": []
                 },
                 {
@@ -33,7 +33,7 @@
                     "first_name": "Henry",
                     "birth_date": "20/10/1959",
                     "chess_id": "ff1235",
-                    "score": 0.0,
+                    "score": 1.0,
                     "opponents": []
                 },
                 {
@@ -42,7 +42,7 @@
                     "first_name": "Jeanne",
                     "birth_date": "02/02/2002",
                     "chess_id": "az1478",
-                    "score": 1.0,
+                    "score": 2.0,
                     "opponents": []
                 }
             ],
@@ -50,8 +50,8 @@
                 {
                     "id": "1",
                     "name": "Round 1",
-                    "start_date": "2023-12-08",
-                    "end_date": "2023-12-08",
+                    "start_date": "2023-12-14",
+                    "end_date": "2023-12-14",
                     "matches": [
                         {
                             "id": "1",
@@ -61,6 +61,29 @@
                                 "first_name": "Doe",
                                 "birth_date": "09/09/1990",
                                 "chess_id": "af1234",
+                                "score": 1.0,
+                                "opponents": []
+                            },
+                            "player2": {
+                                "id": "4",
+                                "last_name": "Marie",
+                                "first_name": "Jeanne",
+                                "birth_date": "02/02/2002",
+                                "chess_id": "az1478",
+                                "score": 1.0,
+                                "opponents": []
+                            },
+                            "status": true,
+                            "winner": "Match nul"
+                        },
+                        {
+                            "id": "2",
+                            "player1": {
+                                "id": "2",
+                                "last_name": "Malcom",
+                                "first_name": "X",
+                                "birth_date": "01/02/1999",
+                                "chess_id": "ff1998",
                                 "score": 0.0,
                                 "opponents": []
                             },
@@ -74,30 +97,7 @@
                                 "opponents": []
                             },
                             "status": true,
-                            "winner": "John Doe "
-                        },
-                        {
-                            "id": "2",
-                            "player1": {
-                                "id": "4",
-                                "last_name": "Marie",
-                                "first_name": "Jeanne",
-                                "birth_date": "02/02/2002",
-                                "chess_id": "az1478",
-                                "score": 0.0,
-                                "opponents": []
-                            },
-                            "player2": {
-                                "id": "2",
-                                "last_name": "Malcom",
-                                "first_name": "X",
-                                "birth_date": "01/02/1999",
-                                "chess_id": "ff1998",
-                                "score": 0.0,
-                                "opponents": []
-                            },
-                            "status": true,
-                            "winner": "Marie Jeanne "
+                            "winner": "Match nul"
                         }
                     ],
                     "status": true
