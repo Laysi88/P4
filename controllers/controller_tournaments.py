@@ -1,4 +1,4 @@
-from managers import CreateTournament, LoadTournament, LoadDataTournament, UpdateTournament
+from managers import CreateTournament, LoadTournament, LoadDataTournament, UpdateTournament, EndTournament
 from tinydb import TinyDB
 
 
@@ -11,3 +11,4 @@ class TournamentController:
         self.load_tournaments = LoadTournament(self.filename)
         self.load_data_tournament = LoadDataTournament(self.filename)
         self.update_tournament = UpdateTournament(self.filename)
+        self.end_tournament = EndTournament(self.filename)

@@ -186,8 +186,6 @@ class PlayView:
                             print("Résultat du match enregistré")
                         else:
                             print("Match introuvable ou déjà terminé")
-                    else:
-                        print("Tous les matchs sont terminés")
 
                 if all(match["status"] for match in round_instance.matches):
                     self.round_controller.update_round.update(tournament_id, round_instance.id, round_instance)
@@ -242,9 +240,9 @@ class PlayView:
                                         tournament_id, match.serialize(), round_id
                                     )
                                     new_round.matches.append(match)
+                                # Mise à jour du round
                                 self.round_controller.update_new_round.update(tournament_id, new_round.id, new_round)
-
-                                break
+                self.tournament_controller.end_tournament.end(tournament)
 
         else:
             print("Tournoi introuvable. Veuillez entrer un ID de tournoi valide.")

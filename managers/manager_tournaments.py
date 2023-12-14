@@ -1,5 +1,6 @@
 from models import Tournament
 from tinydb import TinyDB, Query
+from datetime import datetime
 
 
 class CreateTournament:
@@ -77,3 +78,28 @@ class UpdateTournament:
                 print(f"Aucune modification détectée pour le tournoi avec l'identifiant {tournament_id}.")
         else:
             print(f"Aucun tournoi trouvé avec l'identifiant {tournament_id}")
+
+
+class EndTournament:
+    def __init__(self, filename):
+        self.db = TinyDB(filename).table("tournaments_table")
+
+    def end(self, tournament):
+        # récupère l'id du tournoi
+        tournament_id = str(tournament.id)
+        # vérifie que le tournoi existe
+        if self.db.contains(Query().id == tournament_id):
+            # récupère les données du tournoi
+            tournament_data = self.db.get(Query().id == tournament_id)
+            # vérifie que le tournoi est en cours
+            if not tournament_data["status"]:
+                # verifications des rounds
+                if all(round["status"] for round in tournament_data["rounds"]):
+                    # vériifcation du nombre de rounds
+                    if tournament_data["curent_round"] == tournament_data["total_rounds"]:
+                        # mise à jour du statut du tournoi staut et end_date
+                        self.db.update(
+                            {"status": True, "end_date": datetime.now().strftime("%Y-%m-%d")},
+                            Query().id == tournament_id,
+                        )
+                        print(f"Le tournoi {tournament.name} est terminé.")
