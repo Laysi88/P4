@@ -242,6 +242,7 @@ class PlayView:
                                     new_round.matches.append(match)
                                 # Mise à jour du round
                                 self.round_controller.update_new_round.update(tournament_id, new_round.id, new_round)
+                                break
                 self.tournament_controller.end_tournament.end(tournament)
 
         else:
