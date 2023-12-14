@@ -42,12 +42,10 @@ class TournamentView:
         print("Création d'un tournoi")
 
         # Nom du tournoi
-        while True:
-            name = input("Nom: ")
-            if self.is_valid_name(name):
-                break
-            else:
-                print("Nom invalide")
+        name = input("Nom: max 50 caractères ")
+        if len(name) > 50:
+            print("Le nom est trop long. Limitez à 20 caractères.")
+            name = name[:50]
         # Lieu du tournoi
         while True:
             location = input("Lieu: ")
@@ -99,8 +97,18 @@ class TournamentView:
         selected_players_id = input("Entrez les chess_ids des joueurs à ajouter (séparés par des virgules) : ").split(
             ","
         )
-
-        selected_players = [players_list.get(str(player_id)) for player_id in selected_players_id]
+        selected_players = []
+        for player_id in selected_players_id:
+            # vérification si le joueur est déjà dans la liste
+            if player_id in players_list:
+                player = players_list[player_id]
+                if player not in selected_players:
+                    selected_players.append(player)
+                    print(f"Le joueur {player_id} a été ajouté à la liste.")
+                else:
+                    print(f"Le joueur {player_id} est déjà dans la liste.")
+            else:
+                print(f"Le joueur avec l'ID {player_id} n'existe pas dans la base de données.")
 
         # Rounds du tournoi
         rounds = []
