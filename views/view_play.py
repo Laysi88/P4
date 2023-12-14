@@ -132,6 +132,9 @@ class PlayView:
 
                 # Récupération des rounds du tournoi
                 rounds = tournament.rounds
+                if rounds == []:
+                    print("Le tournoi n'a pas encore commencé")
+                    return
                 for round_data in rounds:
                     round_instance = Round(**round_data)
 
