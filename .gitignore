@@ -3,3 +3,5 @@ database/
 flake-report/
 *.pyc
 __pycache__
+*.txt
+*.json

@@ -91,14 +91,9 @@ class PlayView:
                     start_date = datetime.now().strftime("%Y-%m-%d")
                     end_date = ""
                     status = False
-                    round = Round(
-                        name,
-                        start_date,
-                        end_date,
-                        status,
-                    )
-                    round = self.round_controller.create_first_round.create(tournament_id, round)
-                    print(f"Round: {round.name} - {round.start_date}")
+                    new_round = Round(name, start_date, end_date, status)
+                    new_round = self.round_controller.create_first_round.create(tournament_id, new_round)
+                    print(f"Round: {new_round.name} - {new_round.start_date}")
                     # Récupération des joueurs du tournoi
                     players_copy = list(
                         self.tournament_controller.load_data_tournament.loaddata(tournament_id).players
@@ -110,8 +105,8 @@ class PlayView:
                         player2 = random.choice(players_copy)
                         players_copy.remove(player2)
                         match = Match(player1, player2)
-                        round_id = round
-                        self.match_controller.create_match.create(tournament_id, match, round_id)
+                        round_id = new_round.id
+                        self.match_controller.create_match.create(tournament_id, match.serialize(), round_id)
                         # afficher les match avec seulement le nom des joueurs
                         print(
                             f"Match: {player1['last_name']} {player1['first_name']} vs "
