@@ -58,6 +58,6 @@ class LoadLastRound:
         tournament = self.db.get(Query().id == tournament_id)
         if tournament:
             for round_data in tournament["rounds"]:
-                if round_data["status"] == False:
+                if not round_data["status"]:
                     return round_data
             return None

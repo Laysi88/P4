@@ -73,7 +73,7 @@ class PlayView:
         tournament_id = input("Id du tournoi: ")
         tournament = self.tournament_controller.load_data_tournament.loaddata(tournament_id)
 
-        # Vérifier si il y a au moins 8 joueurs dans le tournoi
+        # Vérifier si le nombre de joueurs est suffisant pour lancer le tournoi
         required_players = 2**tournament.total_rounds
         if len(tournament.players) < required_players:
             print("Il n'y a pas assez de joueurs pour lancer le tournoi")
