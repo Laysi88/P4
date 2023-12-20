@@ -1,6 +1,9 @@
 from models import Tournament
 from tinydb import TinyDB, Query
 from datetime import datetime
+from jinja2 import Environment, FileSystemLoader
+import os
+import re
 
 
 class CreateTournament:
@@ -103,3 +106,39 @@ class EndTournament:
                             Query().id == tournament_id,
                         )
                         print(f"Le tournoi {tournament.name} est terminé.")
+
+
+class TournamentReport:
+    def __init__(self, filename):
+        self.db = TinyDB(filename).table("tournaments_table")
+        self.env = Environment(loader=FileSystemLoader("."))
+        self.template = self.env.get_template("template/template.html")
+
+    def sanitize_filename(self, filename):
+        return re.sub(r"[^\w\s]", "", filename).replace(" ", "_")
+
+    def report(self, tournament, all_tournaments):
+        tournament_id = str(tournament.id)
+        tournament_data = next((t for t in all_tournaments if str(t["id"]) == tournament_id), None)
+
+        if tournament_data:
+            sorted_players = sorted(tournament_data["players"], key=lambda player: player["score"], reverse=True)
+            rounds = tournament_data["rounds"]
+            html_out = self.template.render(
+                tournaments={tournament_id: tournament_data}, sorted_players=sorted_players, rounds=rounds
+            )
+            report_folder = "reports"
+            os.makedirs(report_folder, exist_ok=True)
+            tournament_name = self.sanitize_filename(tournament_data["name"])
+            report_filename = f"{tournament_name}_report.html"
+            report_path = os.path.join(report_folder, report_filename)
+
+            with open(report_path, "w") as file:
+                file.write(html_out)
+
+            print("Rapport généré")
+        else:
+            print(f"Aucun tournoi trouvé avec l'identifiant {tournament_id}")
+
+    def get_all_tournaments(self):
+        return self.db.all()

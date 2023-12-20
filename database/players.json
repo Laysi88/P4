@@ -1,0 +1,148 @@
+{
+    "players_table": {
+        "1": {
+            "id": "1",
+            "last_name": "John",
+            "first_name": "Doe",
+            "birth_date": "05/08/1975",
+            "chess_id": "ab1234",
+            "score": 0.0,
+            "opponents": []
+        },
+        "2": {
+            "id": "2",
+            "last_name": "Smith",
+            "first_name": "Jane",
+            "birth_date": "10/12/1982",
+            "chess_id": "cd5678",
+            "score": 0.0,
+            "opponents": []
+        },
+        "3": {
+            "id": "3",
+            "last_name": "Williams",
+            "first_name": "David",
+            "birth_date": "03/25/1990",
+            "chess_id": "ef9012",
+            "score": 0.0,
+            "opponents": []
+        },
+        "4": {
+            "id": "4",
+            "last_name": "Brown",
+            "first_name": "Emily",
+            "birth_date": "07/17/1988",
+            "chess_id": "gh3456",
+            "score": 0.0,
+            "opponents": []
+        },
+        "5": {
+            "id": "5",
+            "last_name": "Jones",
+            "first_name": "Michael",
+            "birth_date": "12/02/1979",
+            "chess_id": "ij7890",
+            "score": 0.0,
+            "opponents": []
+        },
+        "6": {
+            "id": "6",
+            "last_name": "Taylor",
+            "first_name": "Olivia",
+            "birth_date": "09/14/1995",
+            "chess_id": "kl1234",
+            "score": 0.0,
+            "opponents": []
+        },
+        "7": {
+            "id": "7",
+            "last_name": "Miller",
+            "first_name": "James",
+            "birth_date": "06/30/1984",
+            "chess_id": "mn5678",
+            "score": 0.0,
+            "opponents": []
+        },
+        "8": {
+            "id": "8",
+            "last_name": "Anderson",
+            "first_name": "Sophia",
+            "birth_date": "11/19/1992",
+            "chess_id": "op9012",
+            "score": 0.0,
+            "opponents": []
+        },
+        "9": {
+            "id": "9",
+            "last_name": "Thomas",
+            "first_name": "Daniel",
+            "birth_date": "04/07/1981",
+            "chess_id": "qr3456",
+            "score": 0.0,
+            "opponents": []
+        },
+        "10": {
+            "id": "10",
+            "last_name": "Jackson",
+            "first_name": "Ava",
+            "birth_date": "08/23/1998",
+            "chess_id": "st7890",
+            "score": 0.0,
+            "opponents": []
+        },
+        "11": {
+            "id": "11",
+            "last_name": "White",
+            "first_name": "Joseph",
+            "birth_date": "01/11/1987",
+            "chess_id": "uv1234",
+            "score": 0.0,
+            "opponents": []
+        },
+        "12": {
+            "id": "12",
+            "last_name": "Harris",
+            "first_name": "Mia",
+            "birth_date": "06/05/1993",
+            "chess_id": "wx5678",
+            "score": 0.0,
+            "opponents": []
+        },
+        "13": {
+            "id": "13",
+            "last_name": "Clark",
+            "first_name": "William",
+            "birth_date": "02/28/1986",
+            "chess_id": "yz9012",
+            "score": 0.0,
+            "opponents": []
+        },
+        "14": {
+            "id": "14",
+            "last_name": "Lewis",
+            "first_name": "Charlotte",
+            "birth_date": "09/09/1991",
+            "chess_id": "ab3456",
+            "score": 0.0,
+            "opponents": []
+        },
+        "15": {
+            "id": "15",
+            "last_name": "Lee",
+            "first_name": "Benjamin",
+            "birth_date": "03/15/1983",
+            "chess_id": "cd7890",
+            "score": 0.0,
+            "opponents": []
+        },
+        "16": {
+            "id": "16",
+            "last_name": "Smith",
+            "first_name": "Emily",
+            "birth_date": "07/12/1990",
+            "chess_id": "ef1234",
+            "score": 0.0,
+            "opponents": []
+        }
+    }
+}

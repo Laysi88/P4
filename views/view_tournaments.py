@@ -24,7 +24,8 @@ class TournamentView:
             print("1. Créer un tournoi")
             print("2. Modifier un tournoi")
             print("3. Afficher les tournois")
-            print("4. Retour")
+            print("4. exporter un rapport de tournoi")
+            print("5. Retour")
             choice = input("Votre choix: ")
             if choice == "1":
                 self.create_tournament()
@@ -33,6 +34,8 @@ class TournamentView:
             elif choice == "3":
                 self.load_tournaments()
             elif choice == "4":
+                self.tournament_report()
+            elif choice == "5":
                 break
             else:
                 print("Choix invalide")
@@ -268,3 +271,24 @@ class TournamentView:
         )
         self.tournament_controller.update_tournament.update(updated_tournament)
         print(f"Tournoi {name} modifié avec succès")
+
+    def tournament_report(self):
+        print("Sélectionnez le tournoi à exporter")
+
+        tournaments_data = self.tournament_controller.tournament_report.get_all_tournaments()
+
+        # Sélection de l'id du tournoi à exporter
+        while True:
+            id_to_export = input("Identifiant: ")
+            if id_to_export.isdigit():
+                id_to_export = str(id_to_export)
+                break
+            else:
+                print("Identifiant invalide")
+
+        # Charge le tournoi à exporter
+        tournament_to_export = self.tournament_controller.load_data_tournament.loaddata(id_to_export)
+        print(f"Tournoi à exporter : {tournament_to_export}")
+
+        self.tournament_controller.tournament_report.report(tournament_to_export, tournaments_data)
+        print(f"Tournoi {tournament_to_export.name} exporté avec succès")

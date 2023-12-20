@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Data</title>
+</head>
+
+<body>
+    {% for tournament_id, tournament_data in tournaments.items() %}
+    <h1>{{ tournament_data.name }}</h1>
+    <ul>
+        <li>Location: {{ tournament_data.location }}</li>
+        <li>Start Date: {{ tournament_data.start_date }} </li>
+        {% if tournament_data.end_date %}
+        <li>End Date: {{ tournament_data.end_date }}</li>
+        {% else %}
+        <li>End Date : Non termine</li>
+        {% endif %}
+        <li>Total Rounds: {{ tournament_data.total_rounds }}</li>
+        <li>Current Round: {{ tournament_data.curent_round }}</li>
+        <li>Description: {{ tournament_data.description }}</li>
+
+    </ul>
+    <h2>Players</h2>
+    <ul>
+        {% for player in sorted_players %}
+        <li>
+            {{ player.last_name }} {{ player.first_name }} - Score: {{ player.score }}
+        </li>
+        {% endfor %}
+    </ul>
+    <h2>Matchs</h2>
+    <ul>
+        {% for round in tournament_data.rounds %}
+        <li>
+            <strong> {{ round.name }}</strong>
+            <ul>
+                {% for match in round.matches %}
+                <li>
+                    <strong>Match {{ match.id }}</strong>
+                    <ul>
+                        <li>Player 1: {{ match.player1.last_name }} {{ match.player1.first_name }}</li>
+                        <li>Player 2: {{ match.player2.last_name }} {{ match.player2.first_name }}</li>
+                        <li>Winner: {{ match.winner}}</li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
