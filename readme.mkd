@@ -1,0 +1,26 @@
+# Projet 4 Openclassrooms : Chess Tournament #
+
+
+## Prérequis: ## 
+
+- IDE (exemple:VSCODE ou Pycharm ou tout autre IDE de votre choix)
+- Python: disponible sur https://www.python.org/
+
+Marche à suivre sous Windows
+
+## Etape 1: Installation ##
+
+- Téléchargez ou clonez le dossier.
+- Placez vous dans le dossier puis créez un nouveau envirronement virtuel 
+
+	```python -m venv env```
+- Activez votre envirronement virtuel
+
+    ```env\scripts\activate.bat```
+- Instalez les dépendances 
+
+    ```pip install -r requirements.txt```
+- Lancez le scrip
+
+    ``python main.py``
+

@@ -157,8 +157,17 @@ class PlayView:
                                     f" {match_instance.player2['last_name']} {match_instance.player2['first_name']}"
                                 )
                     # Récupérer l'id du match
-                    if not all(match["status"] for match in round_instance.matches):
-                        match_id = input("Id du match: ")
+                    compteur = len(round_instance.matches)
+                    for match_data in round_instance.matches:
+                        if match_data["status"]:
+                            compteur = compteur - 1
+
+                    while compteur > 0:
+                        match_id = input("Id du match: ou 0 pour quitter ")
+                        if match_id == "0":
+                            compteur = 0
+                            break
+
                         match = self.match_controller.load_match.load(tournament_id, match_id)
                         if match is not None:
                             print(
@@ -178,12 +187,15 @@ class PlayView:
                                 choice = input("Votre choix: ")
                                 if choice == "1":
                                     winner = f"{match['player1']['last_name']} {match['player1']['first_name']} "
+                                    compteur = compteur - 1
                                     break
                                 elif choice == "2":
                                     winner = f"{match['player2']['last_name']} {match['player2']['first_name']} "
+                                    compteur = compteur - 1
                                     break
                                 elif choice == "3":
                                     winner = "Match nul"
+                                    compteur = compteur - 1
                                     break
                             self.match_controller.update_match.result(tournament_id, match_id, winner)
                             print("Résultat du match enregistré")
