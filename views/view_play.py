@@ -264,7 +264,6 @@ class PlayView:
                                     # on les supprime de la liste des joueurs restants
                                     match = Match(player1, player2)
                                     round_id = new_round.id
-                                    print("Round ID f", round_id)
 
                                     # Ajout des matchs au round
                                     self.match_controller.create_match.create(

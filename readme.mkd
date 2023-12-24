@@ -24,3 +24,32 @@ Marche à suivre sous Windows
 
     ``python main.py``
 
+
+## Utilisation ##
+
+Le menu principal est divisé en 3 options
+
+### 1. Gestion des joueurs ### 
+
+ - Créer un joueur
+ - Modifier un joueur
+ - Afficher les joueurs existants
+
+### 2. Gestion des tournois ###
+ - Créer un tounoi
+ - Modifier un tounoi
+ - Afficher les tounoirs existants
+ - Exporter en html un tournoi
+
+### 3. Jouer un tounoi ###
+ - Liste des tounois en cour
+ - Lancer un tounoi
+ - Continer un tounoi
+
+
+## Génération rapport Flake8 ##
+
+ - Tappez la commande 
+ 
+    ``flake8 --format=html --htmldir=flake-report``
+
